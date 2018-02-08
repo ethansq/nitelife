@@ -53,6 +53,17 @@ public class ActivityMain extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        // configure icons
+        int[] imageResId = {
+                R.drawable.ic_explore_24dp,
+                R.drawable.ic_explore_24dp,
+                R.drawable.ic_explore_24dp
+        };
+
+        for (int i = 0; i < imageResId.length; i++) {
+            tabLayout.getTabAt(i).setIcon(imageResId[i]);
+        }
     }
 
     /**
@@ -151,6 +162,11 @@ public class ActivityMain extends AppCompatActivity {
              * We show a total of three pages: LIST, EXPLORE, and CREATE
              */
             return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return null;
         }
     }
 }
