@@ -41,10 +41,45 @@
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <me.ethansq.nitelife.views.NoSwipeViewPager
-        android:id="@+id/container"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <me.ethansq.nitelife.views.NoSwipeViewPager
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <LinearLayout
+            android:id="@+id/locationPermissionMessage"
+            android:gravity="center"
+            android:padding="48dp"
+            android:background="#fff"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textColor="#999"
+                android:textSize="14sp"
+                android:text="Sorry, location permissions are required to use this application."
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:onClick="getLocationPermission"
+                android:fontFamily="sans-serif"
+                android:textColor="#999"
+                android:layout_marginTop="16dp"
+                android:background="@null"
+                android:text="Request"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

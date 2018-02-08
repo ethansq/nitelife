@@ -1,8 +1,12 @@
 package me.ethansq.nitelife.activities;
 
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -24,33 +28,85 @@ import me.ethansq.nitelife.fragments.FragmentExplore;
 
 public class ActivityMain extends AppCompatActivity {
     private final String TAG = "ActivityMain";
+    private final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 6001;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+
     private ViewPager mViewPager;
+    private boolean mLocationPermissionGranted;
+    private View mLocationPermissionMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
 
-        /**
-         * ActivityMain has no Toolbar
-         */
+        mLocationPermissionMessage = findViewById(R.id.locationPermissionMessage);
+        mViewPager = (ViewPager) findViewById(R.id.container);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
     }
 
+    /**
+     * Request location permission, so that we can get the location of the
+     * device. The result of the permission request is handled by a callback,
+     * onRequestPermissionsResult.
+     */
+    public void getLocationPermission(View v) {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+            updateUI();
+        } else {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[] {android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            );
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+
+//        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+
+        updateUI();
+    }
+
+    /**
+     * Primary function of updateUI is to show/hide a message indicating that location permission(s)
+     * are required to use this application
+     */
+    private void updateUI() {
+        mLocationPermissionMessage.setVisibility(View.GONE); // Would rather delete View altogether,
+        // but this should suffice
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getLocationPermission(null);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

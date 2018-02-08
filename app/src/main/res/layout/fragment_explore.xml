@@ -4,9 +4,74 @@
     android:layout_height="match_parent"
     tools:context="me.ethansq.nitelife.fragments.FragmentExplore">
 
-    <com.mindorks.placeholderview.SwipePlaceHolderView
-        android:id="@+id/swipeView"
+    <RelativeLayout
+        android:orientation="vertical"
+        android:id="@+id/contentView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:weightSum="5"
+            android:id="@+id/buttonsWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_weight="1"
+                android:background="#000"
+                android:layout_width="0dp"
+                android:layout_height="48dp" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:background="#000"
+                android:layout_width="0dp"
+                android:layout_height="48dp" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:background="#000"
+                android:layout_width="0dp"
+                android:layout_height="48dp" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:background="#000"
+                android:layout_width="0dp"
+                android:layout_height="48dp" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:background="#000"
+                android:layout_width="0dp"
+                android:layout_height="48dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_above="@id/buttonsWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.mindorks.placeholderview.SwipePlaceHolderView
+                android:id="@+id/swipeView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <RelativeLayout
+                android:id="@+id/progressBarWrapper"
+                android:background="#fff"
+                android:visibility="invisible"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:indeterminate="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 </FrameLayout>

@@ -17,37 +17,33 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeOut;
 import com.mindorks.placeholderview.annotations.swipe.SwipeOutState;
 
 import me.ethansq.nitelife.R;
-import me.ethansq.nitelife.helpers.Profile;
+import me.ethansq.nitelife.helpers.Location;
 
-@Layout(R.layout.view_profile_card)
-public class ProfileCardView {
-    private final String TAG = "ProfileCardView";
+@Layout(R.layout.view_location_card)
+public class LocationCardView {
+    private final String TAG = "LocationCardView";
 
-    @View(R.id.profileImageView)
+    @View(R.id.mainImageView)
     private ImageView profileImageView;
 
-    @View(R.id.nameAgeTxt)
+    @View(R.id.infoText)
     private TextView nameAgeTxt;
 
-    @View(R.id.locationNameTxt)
-    private TextView locationNameTxt;
-
-    private Profile mProfile;
+    private Location mLocation;
     private Context mContext;
     private SwipePlaceHolderView mSwipeView;
 
-    public ProfileCardView(Context context, Profile profile, SwipePlaceHolderView swipeView) {
+    public LocationCardView(Context context, Location location, SwipePlaceHolderView swipeView) {
         mContext = context;
-        mProfile = profile;
+        mLocation = location;
         mSwipeView = swipeView;
     }
 
     @Resolve
     private void onResolved() {
-        Log.e(TAG, mProfile.getImageUrl());
-        Glide.with(mContext).load(mProfile.getImageUrl()).into(profileImageView);
-        nameAgeTxt.setText(mProfile.getName() + ", " + mProfile.getAge());
-        locationNameTxt.setText(mProfile.getLocation());
+        Log.e(TAG, mLocation.getPhotoUrl());
+        Glide.with(mContext).load(mLocation.getPhotoUrl()).into(profileImageView);
+        nameAgeTxt.setText(mLocation.getName());
     }
 
     @SwipeOut
