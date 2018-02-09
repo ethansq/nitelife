@@ -91,6 +91,7 @@ public class FragmentExplore extends Fragment {
          * Nearby Places API
          */
         try {
+            Log.e(TAG, "onStart");
             // Get current location coordinates
             LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 

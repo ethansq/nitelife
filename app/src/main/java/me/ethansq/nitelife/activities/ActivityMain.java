@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import com.mindorks.placeholderview.Utils;
 
 import me.ethansq.nitelife.R;
+import me.ethansq.nitelife.fragments.FragmentBlank;
+import me.ethansq.nitelife.fragments.FragmentCreate;
 import me.ethansq.nitelife.fragments.FragmentExplore;
 
 public class ActivityMain extends AppCompatActivity {
@@ -52,6 +54,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        mViewPager.setCurrentItem(1);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -200,7 +203,15 @@ public class ActivityMain extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return FragmentExplore.newInstance();
+            switch (position) {
+                case 0:
+                    return FragmentBlank.newInstance();
+                case 1:
+                    return FragmentExplore.newInstance();
+                case 2:
+                    return FragmentCreate.newInstance();
+            }
+            return null;
         }
 
         @Override

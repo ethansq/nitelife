@@ -24,10 +24,10 @@ public class LocationCardView {
     private final String TAG = "LocationCardView";
 
     @View(R.id.mainImageView)
-    private ImageView profileImageView;
+    private ImageView mainImageView;
 
     @View(R.id.infoText)
-    private TextView nameAgeTxt;
+    private TextView infoTextView;
 
     private Location mLocation;
     private Context mContext;
@@ -41,9 +41,15 @@ public class LocationCardView {
 
     @Resolve
     private void onResolved() {
+        if (mainImageView == null) {
+            Log.e(TAG, "mainImageView null");
+        } else if (infoTextView == null) {
+            Log.e(TAG, "infoTextView null");
+        }
+
         Log.e(TAG, mLocation.getPhotoUrl());
-        Glide.with(mContext).load(mLocation.getPhotoUrl()).into(profileImageView);
-        nameAgeTxt.setText(mLocation.getName());
+        Glide.with(mContext).load(mLocation.getPhotoUrl()).into(mainImageView);
+        infoTextView.setText(mLocation.getName());
     }
 
     @SwipeOut

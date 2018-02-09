@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="me.ethansq.nitelife.activities.ActivityLogin">
+
+    <LinearLayout
+        android:id="@+id/contentView"
+        android:gravity="center"
+        android:padding="32dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:background="#efefef"
+            android:text="admin@admin.com"
+            android:inputType="textEmailAddress"
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_marginBottom="32dp"
+            android:padding="12dp"
+            android:background="#efefef"
+            android:inputType="textPassword"
+            android:text="forever21"
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:onClick="doAuthentication"
+            android:elevation="1dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"
+            android:textColor="@color/colorAccent"
+            android:text="LOGIN"
+            android:background="#efefef"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/progressBarWrapper"
+        android:background="@drawable/bg_progress_bar"
+        android:layout_centerInParent="true"
+        android:layout_width="72dp"
+        android:layout_height="72dp">
+
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</RelativeLayout>
