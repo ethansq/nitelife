@@ -26,6 +26,7 @@
             android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/dislikeButton"
                 android:padding="4dp"
                 android:src="@drawable/ic_cancel_24dp"
                 android:layout_weight="1"
@@ -36,6 +37,7 @@
                 app:civ_border_color="#fff"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/favouriteButton"
                 android:src="@drawable/ic_star_empty_24dp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -45,6 +47,7 @@
                 app:civ_border_color="#fff"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/likeButton"
                 android:padding="4dp"
                 android:src="@drawable/ic_like_24dp"
                 android:layout_weight="1"

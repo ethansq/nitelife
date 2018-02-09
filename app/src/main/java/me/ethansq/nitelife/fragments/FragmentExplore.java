@@ -60,29 +60,22 @@ public class FragmentExplore extends Fragment {
         mSwipeView = (SwipePlaceHolderView) mView.findViewById(R.id.swipeView);
         mSwipeView.getBuilder()
                 .setDisplayViewCount(3);
-//                .setSwipeDecor(new SwipeDecor()
-//                        .setPaddingTop(20)
-//                        .setRelativeScale(0.01f);
-//                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
-//                        .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
-//
-//        for (Profile profile : Utils.loadProfiles(getContext())){
-//            mSwipeView.addView(new ProfileCardView(getContext(), profile, mSwipeView));
-//        }
 
-//        mView.findViewById(R.id.rejectBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mSwipeView.doSwipe(false);
-//            }
-//        });
-//
-//        mView.findViewById(R.id.acceptBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mSwipeView.doSwipe(true);
-//            }
-//        });
+        // Set listener for clicking the dislike button
+        mView.findViewById(R.id.dislikeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeView.doSwipe(false);
+            }
+        });
+
+        // Listener for the like button
+        mView.findViewById(R.id.likeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeView.doSwipe(true);
+            }
+        });
 
         return mView;
     }
