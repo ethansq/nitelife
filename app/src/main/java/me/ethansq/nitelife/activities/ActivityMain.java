@@ -1,27 +1,26 @@
 package me.ethansq.nitelife.activities;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import android.widget.TextView;
+import com.mindorks.placeholderview.Utils;
 
 import me.ethansq.nitelife.R;
 import me.ethansq.nitelife.fragments.FragmentExplore;
@@ -32,6 +31,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+    private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private boolean mLocationPermissionGranted;
     private View mLocationPermissionMessage;
@@ -46,24 +46,33 @@ public class ActivityMain extends AppCompatActivity {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        // configure icons
-        int[] imageResId = {
-                R.drawable.ic_explore_24dp,
-                R.drawable.ic_explore_24dp,
-                R.drawable.ic_explore_24dp
-        };
+            }
 
-        for (int i = 0; i < imageResId.length; i++) {
-            tabLayout.getTabAt(i).setIcon(imageResId[i]);
-        }
+            @Override
+            public void onPageSelected(int position) {
+                // When a new page is selected, update our TabItems manually
+                Log.e(TAG, mViewPager.getCurrentItem()+"");
+                updateTabs(false);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        updateTabs(true);
     }
 
     /**
@@ -113,6 +122,46 @@ public class ActivityMain extends AppCompatActivity {
         // but this should suffice
     }
 
+    final int inactiveTabs[] = {
+            R.drawable.ic_explore_inactive,
+            R.drawable.ic_explore_inactive,
+            R.drawable.ic_explore_inactive
+    };
+
+    final int activeTabs[] = {
+            R.drawable.ic_explore,
+            R.drawable.ic_explore,
+            R.drawable.ic_explore
+    };
+
+    /**
+     * When we select a new page, we need to update our TabItems to reflect the currently
+     * selected tab
+     */
+    private void updateTabs(boolean init) {
+        int active = mViewPager.getCurrentItem();
+
+        // Set the initial icons for our TabItems
+        for (int i = 0; i < 3; i++) {
+            if (init) {
+                // Depending on the active Fragment, our tab icon might look different
+                View v = LayoutInflater.from(this).inflate(
+                        R.layout.view_tab,
+                        null
+                );
+                mTabLayout.getTabAt(i).setCustomView(v);
+            }
+
+            View v = mTabLayout.getTabAt(i).getCustomView();
+
+            int padding = (i == active) ? Utils.dpToPx(2) : Utils.dpToPx(6);
+            v.findViewById(R.id.tabIconWrapper).setPadding(padding, padding, padding, padding);
+            ((ImageView) v.findViewById(R.id.tabIcon)).setImageResource(
+                    (i == active) ? activeTabs[i] : inactiveTabs[i]
+            );
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -141,14 +190,12 @@ public class ActivityMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private Context mContext;
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        public SectionsPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
+            mContext = context;
         }
 
         @Override
