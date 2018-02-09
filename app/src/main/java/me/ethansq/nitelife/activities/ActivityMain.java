@@ -123,15 +123,15 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     final int inactiveTabs[] = {
+            R.drawable.ic_menu_inactive,
             R.drawable.ic_explore_inactive,
-            R.drawable.ic_explore_inactive,
-            R.drawable.ic_explore_inactive
+            R.drawable.ic_add_inactive
     };
 
     final int activeTabs[] = {
+            R.drawable.ic_menu,
             R.drawable.ic_explore,
-            R.drawable.ic_explore,
-            R.drawable.ic_explore
+            R.drawable.ic_add
     };
 
     /**
