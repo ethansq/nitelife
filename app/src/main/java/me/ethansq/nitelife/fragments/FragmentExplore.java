@@ -35,6 +35,7 @@ public class FragmentExplore extends Fragment {
 
     private View mView;
     private SwipePlaceHolderView mSwipeView;
+    private View mProgressBarWrapper;
     private RequestQueue mRequestQueue;
 
     public FragmentExplore() {} // Required empty public constructor
@@ -55,6 +56,7 @@ public class FragmentExplore extends Fragment {
 
         mRequestQueue = Volley.newRequestQueue(getContext());
         mView = inflater.inflate(R.layout.fragment_explore, container, false);
+        mProgressBarWrapper = mView.findViewById(R.id.progressBarWrapper);
 
         // Inflate the layout for this fragment
         mSwipeView = (SwipePlaceHolderView) mView.findViewById(R.id.swipeView);
@@ -88,7 +90,6 @@ public class FragmentExplore extends Fragment {
          * In order to populate our locations, we send a GET request to Google's
          * Nearby Places API
          */
-
         try {
             // Get current location coordinates
             LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
@@ -127,6 +128,8 @@ public class FragmentExplore extends Fragment {
                                             mSwipeView.addView(new LocationCardView(getContext(), loc, mSwipeView));
                                         }
 
+                                        Utils.crossfade(null, mProgressBarWrapper);
+
                                     } catch (JSONException ex) {
                                         ex.printStackTrace();
                                     }
@@ -157,7 +160,7 @@ public class FragmentExplore extends Fragment {
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
 
         } catch (SecurityException e) {
-            // ...
+            e.printStackTrace();
         }
     }
 }
